@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_app/api/location_service.dart';
 import 'package:weather_app/api/weather_api_service.dart';
 
