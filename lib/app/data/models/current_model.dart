@@ -6,8 +6,8 @@ class Current {
   final int pressure;
   final int humidity;
   final double? windMph;
-  // final Weather weather; // Assuming a separate Weather class for description/details
-  // final Wind wind; // Assuming a separate Wind class for wind details
+  final String weatherMain;
+  final String weatherDescription;
 
   Current({
     required this.temp,
@@ -17,8 +17,8 @@ class Current {
     required this.pressure,
     required this.humidity,
     this.windMph,
-    // required this.weather,
-    // required this.wind,
+    required this.weatherMain,
+    required this.weatherDescription,
   });
 
   /// Factory constructor to parse JSON data for current weather
@@ -31,8 +31,8 @@ class Current {
       pressure: json['pressure'],
       humidity: json['humidity'],
       windMph: json['wind_mph']?.toDouble(),
-      // weather: Weather.fromJson(json['weather']), // Assuming a separate Weather class
-      // wind: Wind.fromJson(json['wind']), // Assuming a separate Wind class
+      weatherMain: json['weatherMain'],
+      weatherDescription: json['weatherDescription'],
     );
   }
 
@@ -45,8 +45,8 @@ class Current {
       'temp_max': tempMax,
       'pressure': pressure,
       'humidity': humidity,
-      // 'weather': weather.toJson(),
-      // 'wind': wind.toJson(),
+      'weatherMain': weatherMain,
+      'weatherDescription': weatherDescription,
     };
   }
 }
