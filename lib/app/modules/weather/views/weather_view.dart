@@ -53,15 +53,19 @@ class WeatherView extends GetView<WeatherController> {
                           onSelected: controller.onDaySelected,
                           color: theme.cardColor,
                           padding: EdgeInsets.zero,
-                          itemBuilder: (context) => controller.weatherDetails.forecast.forecastday.map((fd) {
-                            return PopupMenuItem<String>(
-                              value: fd.date.convertToDay(),
-                              child: Text(
-                                fd.date.convertToDay(),
-                                style: theme.textTheme.displaySmall,
-                              ),
-                            );
-                          }).toList(),
+                          itemBuilder: (context) {
+                            final forecastDays = controller.weatherDetails.dailyForecasts ?? [];
+                            return forecastDays.map((fd) {
+                              final date = fd.date?.convertToDay() ?? '';
+                              return PopupMenuItem<String>(
+                                value: date,
+                                child: Text(
+                                  date,
+                                  style: theme.textTheme.displaySmall,
+                                ),
+                              );
+                            }).toList();
+                          },
                           child: Container(
                             height: 50.h,
                             padding: EdgeInsetsDirectional.only(start: 8.w),
@@ -96,13 +100,16 @@ class WeatherView extends GetView<WeatherController> {
                       controller: controller.pageController,
                       physics: const ClampingScrollPhysics(),
                       onPageChanged: controller.onCardSlided,
-                      itemCount: controller.weatherDetails.forecast.forecastday.length,
+                      itemCount: controller.weatherDetails.dailyForecasts.length ?? 0,
                       itemBuilder: (context, index) {
-                        final forecastDay = controller.weatherDetails.forecast.forecastday[index];
-                        return WeatherDetailsCard(
-                          weatherDetails: controller.weatherDetails,
-                          forecastDay: forecastDay,
-                        );
+                        final forecast = controller.weatherDetails.dailyForecasts[index];
+                        if (forecast != null) {
+                          return WeatherDetailsCard(
+                            weatherDetails: controller.weatherDetails,
+                            forecast: forecast, forecastDay: forecast,
+                          );
+                        }
+                        return SizedBox(); // Fallback for null forecast
                       },
                     ),
                   ),
@@ -110,7 +117,7 @@ class WeatherView extends GetView<WeatherController> {
                   Center(
                     child: AnimatedSmoothIndicator(
                       activeIndex: controller.currentPage,
-                      count: controller.weatherDetails.forecast.forecastday.length,
+                      count: controller.weatherDetails.dailyForecasts.length ?? 0,
                       effect: WormEffect(
                         activeDotColor: theme.primaryColor,
                         dotColor: theme.colorScheme.secondary,
@@ -141,14 +148,14 @@ class WeatherView extends GetView<WeatherController> {
                               WeatherDetailsItem(
                                 title: Strings.wind.tr,
                                 icon: Constants.wind,
-                                value: '${controller.weatherDetails.current.windMph?.toInt() ?? 0}',
+                                value: '${controller.weatherDetails.dailyForecasts[controller.currentPage].wind?.speed?.toInt() ?? 0}',
                                 text: 'mph',
                               ),
                               16.horizontalSpace,
                               WeatherDetailsItem(
                                 title: Strings.pressure.tr,
                                 icon: Constants.pressure,
-                                value: '${controller.weatherDetails.current.pressure.toInt() ?? 0}',
+                                value: '${controller.weatherDetails.dailyForecasts[controller.currentPage].main?.pressure?.toInt() ?? 0}',
                                 text: 'inHg',
                               ),
                             ],
@@ -161,13 +168,17 @@ class WeatherView extends GetView<WeatherController> {
                           height: 100.h,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: controller.forecastday.hour.length,
+                            itemCount: controller.weatherDetails.hourlyForecasts?.length ?? 0, // Corrected item count
                             itemBuilder: (context, index) {
-                              final hour = controller.forecastday.hour[index];
-                              return ForecastHourItem(hour: hour);
+                              final hour = controller.weatherDetails.hourlyForecasts?[index]; // Directly access Hour object
+                              if (hour != null) {
+                                return ForecastHourItem(hour: hour); // Pass Hour object to the item
+                              }
+                              return SizedBox(); // Fallback for null hour
                             },
                           ),
                         ),
+
                         16.verticalSpace,
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,11 +190,11 @@ class WeatherView extends GetView<WeatherController> {
                                 children: [
                                   SunRiseSetItem(
                                     text: Strings.sunrise.tr,
-                                    value: controller.forecastday.astro.sunrise.formatTime(),
+                                    value: controller.weatherDetails.dailyForecasts[controller.currentPage].weather?[0].main ?? "06:00",
                                   ),
                                   SunRiseSetItem(
                                     text: Strings.sunset.tr,
-                                    value: controller.forecastday.astro.sunset.formatTime(),
+                                    value: controller.weatherDetails.dailyForecasts[controller.currentPage].weather?[0].description ?? "18:00",
                                   ),
                                 ],
                               ),
@@ -195,15 +206,15 @@ class WeatherView extends GetView<WeatherController> {
                                 children: [
                                   WeatherRowData(
                                     text: Strings.humidity.tr,
-                                    value: '${controller.forecastday.day.avghumidity?.toInt() ?? 0}%',
+                                    value: '${controller.weatherDetails.dailyForecasts?[controller.currentPage].date}',
                                   ),
                                   WeatherRowData(
                                     text: Strings.realFeel.tr,
-                                    value: '${controller.forecastday.day.avgtempC?.toInt() ?? 0}°',
+                                    value: '${controller.weatherDetails.dailyForecasts?[controller.currentPage].main?.tempMin?.toInt() ?? 0}°',
                                   ),
                                   WeatherRowData(
                                     text: Strings.uv.tr,
-                                    value: '${controller.forecastday.day.uv?.toInt() ?? 0}',
+                                    value: '${controller.weatherDetails.dailyForecasts?[controller.currentPage]?.main?.tempMax?.toInt() ?? 0}',
                                   ),
                                 ],
                               ),

@@ -9,16 +9,26 @@ import '../../../../data/models/weather_details_model.dart';
 
 class WeatherDetailsCard extends StatelessWidget {
   final WeatherDetailsModel weatherDetails;
-  final Forecastday forecastDay;
+  final DayForecast forecastDay;
+
   const WeatherDetailsCard({
     super.key,
     required this.weatherDetails,
-    required this.forecastDay,
+    required this.forecastDay, required DayForecast forecast,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+
+    // Fallback values for null safety
+    final locationName = weatherDetails.location?.name?.toRightCity() ?? "Unknown City";
+    final countryName = weatherDetails.location?.name?.toRightCountry() ?? "Unknown Country";
+    final maxTemp = forecastDay.main?.tempMax?.toInt() ?? 0;
+    final conditionText = forecastDay.weather?[0].description ?? "Unknown Condition";
+    final iconUrl = 'http://openweathermap.org/img/wn/${forecastDay.weather?[0].icon}.png';
+    'https://via.placeholder.com/150'; // Placeholder image
+
     return Container(
       padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 20.h),
       margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -30,7 +40,7 @@ class WeatherDetailsCard extends StatelessWidget {
         children: [
           30.verticalSpace,
           CustomCachedImage(
-            imageUrl: forecastDay.day.condition.icon.toHighRes().addHttpPrefix(),
+            imageUrl: iconUrl,
             fit: BoxFit.cover,
             width: 150.w,
             height: 150.h,
@@ -38,7 +48,7 @@ class WeatherDetailsCard extends StatelessWidget {
           ),
           30.verticalSpace,
           Text(
-            '${weatherDetails.location.name?.toRightCity()}, ${weatherDetails.location.name?.toRightCountry()}',
+            '$locationName, $countryName',
             style: theme.textTheme.displaySmall?.copyWith(
               color: Colors.white,
             ),
@@ -46,7 +56,7 @@ class WeatherDetailsCard extends StatelessWidget {
           ),
           12.verticalSpace,
           Text(
-            '${forecastDay.day.maxtempC.toInt()}${Strings.celsius.tr}',
+            '$maxTemp${Strings.celsius.tr}',
             style: theme.textTheme.displaySmall?.copyWith(
               fontSize: 64.sp,
               color: Colors.white,
@@ -54,7 +64,7 @@ class WeatherDetailsCard extends StatelessWidget {
           ),
           16.verticalSpace,
           Text(
-            forecastDay.day.condition.text,
+            conditionText,
             style: theme.textTheme.displaySmall?.copyWith(
               color: Colors.white,
             ),

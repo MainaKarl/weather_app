@@ -19,7 +19,7 @@ class WeatherController extends GetxController {
 
   // hold the weather details & forecast day
   late WeatherDetailsModel weatherDetails;
-  late Forecastday forecastday;
+  late DayForecast forecastday;
 
   // for update
   final dotIndicatorsId = 'DotIndicators';
@@ -78,7 +78,12 @@ class WeatherController extends GetxController {
         },
         onSuccess: (response) {
           weatherDetails = WeatherDetailsModel.fromJson(response.data);
-          forecastday = weatherDetails.forecast.forecastday[0];
+
+          // Ensure we are accessing the List<DayForecast> correctly
+          if (weatherDetails.dailyForecasts != null && weatherDetails.dailyForecasts!.isNotEmpty) {
+            forecastday = weatherDetails.dailyForecasts![0];  // Access the first day in the list
+          }
+
           apiCallStatus = ApiCallStatus.success;
           update();
         },
@@ -91,25 +96,27 @@ class WeatherController extends GetxController {
     );
   }
 
+
+
   /// when the user change the selected day
   onDaySelected(String day) {
     selectedDay = day;
-    var index = weatherDetails.forecast.forecastday.indexWhere((fd) {
-      return fd.date.convertToDay() == day;
+    var index = weatherDetails.dailyForecasts.indexWhere((fd) {
+      return fd.date?.convertToDay() == day;
     });
 
     pageController.animateToPage(
-      index,
+      index!,
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeIn,
     );
-    onCardSlided(index);
+    onCardSlided(index!);
   }
 
   /// when the user slide the weather card
   onCardSlided(int index) {
-    forecastday = weatherDetails.forecast.forecastday[index];
-    selectedDay = forecastday.date.convertToDay();
+    forecastday = weatherDetails.dailyForecasts[index];
+    selectedDay = forecastday.date!.convertToDay();
     currentPage = index;
     update();
   }

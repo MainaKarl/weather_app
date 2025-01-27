@@ -26,17 +26,17 @@ class ForecastHourItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            hour.time.convertToTime(),
+            hour.time != null ? '${hour.time?.hour}:${hour.time?.minute}' : 'Unknown Time', // Format the time
             style: theme.textTheme.bodySmall,
           ),
           CustomCachedImage(
-            imageUrl: hour.condition.icon.addHttpPrefix(),
+            imageUrl: hour.condition?.icon ?? '', // Fallback to empty string if icon is null
             fit: BoxFit.cover,
             width: 50.w,
             height: 50.h,
           ),
           Text(
-            '${hour.tempC.toInt().toString()}${Strings.celsius.tr}',
+            '${hour.tempC?.toInt().toString()}${Strings.celsius.tr}',
             style: theme.textTheme.bodySmall,
           ),
         ],
