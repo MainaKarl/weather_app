@@ -66,7 +66,14 @@ lib/
 
 ## Screenshots
 
-(Add relevant screenshots here to showcase the app design and functionality.)
+![Screenshot_2025-01-27_23_55_51](https://github.com/user-attachments/assets/8c645aa0-626d-483d-825c-376de30a7723)
+![Screenshot_2025-01-28_00-13-38](https://github.com/user-attachments/assets/65c3f70c-6d4b-481f-8b65-81f5ebfafd48)
+![Screenshot_2025-01-28_00-14-25](https://github.com/user-attachments/assets/1140869b-f4e4-4f88-89b1-a21424f0c308)
+![Screenshot_2025-01-28_00-18-40](https://github.com/user-attachments/assets/17dbe985-b2cd-4fb1-8aee-4e01abf16d7c)
+![Screenshot_2025-01-28_00-19-19](https://github.com/user-attachments/assets/4734a3ac-2cd7-4197-9470-7905fad2b86b)
+![Screenshot_2025-01-28_00-20-05](https://github.com/user-attachments/assets/da7ac0a3-bbd1-4656-998d-95782559fee9)
+![Screenshot_2025-01-28_00-20-28](https://github.com/user-attachments/assets/beaf3e74-9f83-4442-a58c-bd5f98100420)
+
 
 ## Contributing
 
