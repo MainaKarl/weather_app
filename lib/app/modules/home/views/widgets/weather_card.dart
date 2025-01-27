@@ -52,7 +52,7 @@ class WeatherCard extends StatelessWidget {
                   ),
                   8.verticalSpace,
                   Text(
-                    location.name?.toRightCity() ?? "Unknown City",
+                    current.weatherMain.toRightCity() ?? "Unknown City",
                     style: theme.textTheme.displayMedium?.copyWith(
                       color: Colors.white,
                     ),
@@ -62,7 +62,7 @@ class WeatherCard extends StatelessWidget {
                   20.verticalSpace,
                   Text(
                     // Using wind speed as an alternative to the "condition"
-                    'Wind: ${current.windMph?.toStringAsFixed(1) ?? 'N/A'} mph',
+                    'Description: ${current.weatherDescription}',
                     style: theme.textTheme.displaySmall?.copyWith(
                       color: Colors.white,
                     ),
