@@ -13,7 +13,11 @@ class WeatherModel {
   /// Factory constructor to parse data from OpenWeather API JSON response
   factory WeatherModel.fromJson(Map<String, dynamic> json) {
     return WeatherModel(
-      location: Location.fromJson(json['coord']), // 'coord' represents the location
+      location: Location.fromJson({
+        ...json['coord'],
+        'country': json['sys']['country'],
+        'name': json['name'],
+      }), // 'coord' represents the location
       current: Current.fromJson({
         'temp': json['main']['temp'],
         'feels_like': json['main']['feels_like'],

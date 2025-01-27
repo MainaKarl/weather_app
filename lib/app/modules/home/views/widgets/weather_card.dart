@@ -43,7 +43,7 @@ class WeatherCard extends StatelessWidget {
                 children: [
                   10.verticalSpace,
                   Text(
-                    location.country?.toRightCountry() ?? "Unknown Country",
+                    location.name?.toRightCountry() ?? "Unknown Country",
                     style: theme.textTheme.displaySmall?.copyWith(
                       color: Colors.white,
                     ),

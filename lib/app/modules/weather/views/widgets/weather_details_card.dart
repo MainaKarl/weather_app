@@ -38,7 +38,7 @@ class WeatherDetailsCard extends StatelessWidget {
           ),
           30.verticalSpace,
           Text(
-            '${weatherDetails.location.name?.toRightCity()}, ${weatherDetails.location.country?.toRightCountry()}',
+            '${weatherDetails.location.name?.toRightCity()}, ${weatherDetails.location.name?.toRightCountry()}',
             style: theme.textTheme.displaySmall?.copyWith(
               color: Colors.white,
             ),
