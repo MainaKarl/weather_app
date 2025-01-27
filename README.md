@@ -32,21 +32,14 @@ git clone <repository-url>
 cd <repository-directory>
 ```
 
-### 2. Configure API Key
-- Create a `.env` file in the root of the project.
-- Add your OpenWeather API key to the file:
-  ```
-  OPENWEATHER_API_KEY=your_api_key_here
-  ```
-
-### 3. Install Dependencies
+### 2. Install Dependencies
 Run the following commands to fetch and upgrade the required dependencies:
 ```bash
 flutter pub get
 flutter pub upgrade
 ```
 
-### 4. Run the Application
+### 3. Run the Application
 To start the application on an emulator or physical device:
 ```bash
 flutter run
@@ -74,14 +67,6 @@ lib/
 ![Screenshot_2025-01-28_00-20-05](https://github.com/user-attachments/assets/da7ac0a3-bbd1-4656-998d-95782559fee9)
 ![Screenshot_2025-01-28_00-20-28](https://github.com/user-attachments/assets/beaf3e74-9f83-4442-a58c-bd5f98100420)
 
-
-## Contributing
-
-Contributions are welcome! To contribute:
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix.
-3. Commit your changes with clear messages.
-4. Submit a pull request.
 
 
 Happy coding!
