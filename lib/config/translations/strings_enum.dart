@@ -17,7 +17,6 @@ class Strings {
   static const String welcomScreenSubtitle = 'welcomScreenSubtitle';
   static const String getStarted = 'getStarted';
   static const String viewWeather = 'view the weather';
-  static const String login = 'login';
 
   static const String discoverTheWeather = 'discoverTheWeather';
   static const String aroundTheWorld = 'aroundTheWorld';
