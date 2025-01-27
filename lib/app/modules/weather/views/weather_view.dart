@@ -206,7 +206,7 @@ class WeatherView extends GetView<WeatherController> {
                                 children: [
                                   WeatherRowData(
                                     text: Strings.humidity.tr,
-                                    value: '${controller.weatherDetails.dailyForecasts?[controller.currentPage].date}',
+                                    value: '${controller.weatherDetails.dailyForecasts[controller.currentPage].main?.humidity ?? 0}%',
                                   ),
                                   WeatherRowData(
                                     text: Strings.realFeel.tr,

@@ -23,7 +23,7 @@ class WeatherDetailsCard extends StatelessWidget {
 
     // Fallback values for null safety
     final locationName = weatherDetails.location?.name?.toRightCity() ?? "Unknown City";
-    final countryName = weatherDetails.location?.name?.toRightCountry() ?? "Unknown Country";
+    final countryName = forecastDay.city?.country?.toRightCountry() ?? "Unknown Country";
     final maxTemp = forecastDay.main?.tempMax?.toInt() ?? 0;
     final conditionText = forecastDay.weather?[0].description ?? "Unknown Condition";
     final iconUrl = 'http://openweathermap.org/img/wn/${forecastDay.weather?[0].icon}.png';

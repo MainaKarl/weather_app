@@ -17,7 +17,7 @@ class WeatherDetailsModel {
     return WeatherDetailsModel(
       location: json['city'] != null ? Location.fromJson(json['city']) : null,
       dailyForecasts: json['list'] != null
-          ? List<DayForecast>.from(json['list'].map((x) => DayForecast.fromJson(x)))
+          ? List<DayForecast>.from(json['list'].map((x) => DayForecast.fromJson(x)..city = Location.fromJson(json['city'])))
           : [],
     );
   }
@@ -42,7 +42,7 @@ class Hour {
     this.condition,
     this.wind,
     this.clouds,
-    this.tempC
+    this.tempC,
   });
 
   factory Hour.fromJson(Map<String, dynamic> json) => Hour(
@@ -70,6 +70,7 @@ class DayForecast {
   List<WeatherCondition>? weather;
   Wind? wind;
   Clouds? clouds;
+  Location? city;
 
   DayForecast({
     this.date,
@@ -77,6 +78,7 @@ class DayForecast {
     this.weather,
     this.wind,
     this.clouds,
+    this.city,
   });
 
   factory DayForecast.fromJson(Map<String, dynamic> json) => DayForecast(
@@ -87,6 +89,7 @@ class DayForecast {
         : [],
     wind: json['wind'] != null ? Wind.fromJson(json['wind']) : null,
     clouds: json['clouds'] != null ? Clouds.fromJson(json['clouds']) : null,
+    city: json['city'] != null ? Location.fromJson(json['city']) : null, // Adding city
   );
 
   Map<String, dynamic> toJson() => {
@@ -95,6 +98,7 @@ class DayForecast {
     'weather': weather?.map((x) => x.toJson()).toList(),
     'wind': wind?.toJson(),
     'clouds': clouds?.toJson(),
+    'city': city?.toJson(), // Including city in toJson
   };
 }
 
@@ -191,5 +195,35 @@ class Clouds {
 
   Map<String, dynamic> toJson() => {
     'all': all,
+  };
+}
+
+class Location {
+  String? name;
+  String? country;
+  double? latitude;
+  double? longitude;
+
+  Location({
+    this.name,
+    this.country,
+    this.latitude,
+    this.longitude,
+  });
+
+  factory Location.fromJson(Map<String, dynamic> json) => Location(
+    name: json['name'],
+    country: json['country'],
+    latitude: json['coord'] != null ? json['coord']['lat']?.toDouble() : null,
+    longitude: json['coord'] != null ? json['coord']['lon']?.toDouble() : null,
+  );
+
+  Map<String, dynamic> toJson() => {
+    'name': name,
+    'country': country,
+    'coord': {
+      'lat': latitude,
+      'lon': longitude,
+    },
   };
 }
