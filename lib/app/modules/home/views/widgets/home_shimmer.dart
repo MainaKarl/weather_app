@@ -37,10 +37,6 @@ class HomeShimmer extends StatelessWidget {
                 height: 50.h,
               ),
               8.horizontalSpace,
-              ShimmerWidget.circular(
-                width: 50.w,
-                height: 50.h,
-              ),
             ],
           ),
           24.verticalSpace,
