@@ -9,6 +9,7 @@ import '../../../../utils/constants.dart';
 import '../../../data/models/weather_details_model.dart';
 import '../../../services/api_call_status.dart';
 import '../../../services/base_client.dart';
+import '../../../services/location_service.dart';
 
 class WeatherController extends GetxController {
   static WeatherController get instance => Get.find();
@@ -47,22 +48,31 @@ class WeatherController extends GetxController {
   
   @override
   void onReady() {
-    getWeatherDetails();
+    getUserLocation();
     super.onReady();
   }
 
   /// get current language
   bool get isEnLang => currentLanguage == 'en';
 
+  /// get the user location
+  getUserLocation() async {
+    var city = await LocationService().getCityFromLocation();
+    if (city != null) {
+      print("User's city: $city");
+      await getWeatherDetails(city); // Use city name for weather API
+    }
+  }
+
   /// get weather details
-  getWeatherDetails() async {
+  getWeatherDetails(String city) async {
     await showLoadingOverLay(
       asyncFunction: () async => await BaseClient.safeApiCall(
         Constants.forecastWeatherApiUrl,
         RequestType.get,
         queryParameters: {
           Constants.key: Constants.apiKey,
-          Constants.q: Get.arguments,
+          Constants.q: city,
           Constants.days: days,
           Constants.lang: currentLanguage,
         },

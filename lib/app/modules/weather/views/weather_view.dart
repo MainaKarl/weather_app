@@ -33,7 +33,7 @@ class WeatherView extends GetView<WeatherController> {
             apiCallStatus: controller.apiCallStatus,
             loadingWidget: () => const Center(child: CircularProgressIndicator()),
             errorWidget: () => ApiErrorWidget(
-              retryAction: () => controller.getWeatherDetails(),
+              retryAction: () => controller.getUserLocation(),
             ),
             successWidget: () => SingleChildScrollView(
               child: Column(

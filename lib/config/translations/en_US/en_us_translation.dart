@@ -19,7 +19,6 @@ const Map<String, String> enUs = {
   Strings.welcomScreenSubtitle : 'Planing your trip become more easier with ideate weather app. you can instantly see the whole word weather within few second',
   Strings.getStarted : 'Get Started',
   Strings.viewWeather : 'View the weather',
-  Strings.login : 'Login',
 
 
   Strings.discoverTheWeather : 'Discover the weather',
